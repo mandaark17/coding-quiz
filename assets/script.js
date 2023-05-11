@@ -1,95 +1,41 @@
-// Questions/Answers text and logic
+// Questions/Answers 
 var questions = [
-{
-    question: "Are you alive?",
+{//question 1
+    question: "Which is NOT a JS variable type?",
     answers: [
-        {text: "no", correct: false},
-        {text: "yes", correct: true},
-        {text: "dont wanna be", correct: false},
-        {text: "look away", correct: false},
+        {text: "Boolean", correct: false},
+        {text: "Java", correct: true},
+        {text: "String", correct: false},
+        {text: "Number", correct: false},
     ]
 },
-{
-    question: "Are you dead?",
+{//question 2
+    question: "Which method returns the length of the string?",
     answers: [
-        {text: "maybe", correct: false},
-        {text: "no", correct: true},
-        {text: "trying to be", correct: false},
-        {text: "later", correct: false},
+        {text: "length()", correct: true},
+        {text: "size()", correct: false},
+        {text: "index()", correct: false},
+        {text: "None of the Above", correct: false},
     ]
 },
-{
-    question: " Question Text?",
+{//question 3
+    question: "What is correct function syntax?",
     answers: [
-        {text: "option 1", correct: false},
-        {text: "truth boi", correct: true},
-        {text: "option 3", correct: false},
-        {text: "option 4", correct: false},
+        {text: "function: myFunction()", correct: false},
+        {text: "function = myFunction()", correct: false},
+        {text: "function myFunction()", correct: true},
+        {text: "myFunction():function", correct: false},
     ]
 },
-{
-    question: " Question Text?",
+{//question 4
+    question: "How does a for loop start?",
     answers: [
-        {text: "option 1", correct: false},
-        {text: "truth boi", correct: true},
-        {text: "option 3", correct: false},
-        {text: "option 4", correct: false},
+        {text: "for (i=0; i<=5)", correct: false},
+        {text: "for (i=0; i<=5; i++)", correct: true},
+        {text: "for (i=1 to 5)", correct: false},
+        {text: "for (i<=5; i++)", correct: false},
     ]
 },
-{
-    question: " Question Text?",
-    answers: [
-        {text: "option 1", correct: false},
-        {text: "truth boi", correct: true},
-        {text: "option 3", correct: false},
-        {text: "option 4", correct: false},
-    ]
-},
-{
-    question: " Question Text?",
-    answers: [
-        {text: "option 1", correct: false},
-        {text: "truth boi", correct: true},
-        {text: "option 3", correct: false},
-        {text: "option 4", correct: false},
-    ]
-},
-{
-    question: " Question Text?",
-    answers: [
-        {text: "option 1", correct: false},
-        {text: "truth boi", correct: true},
-        {text: "option 3", correct: false},
-        {text: "option 4", correct: false},
-    ]
-},
-{
-    question: " Question Text?",
-    answers: [
-        {text: "option 1", correct: false},
-        {text: "truth boi", correct: true},
-        {text: "option 3", correct: false},
-        {text: "option 4", correct: false},
-    ]
-},
-{
-    question: " Question Text?",
-    answers: [
-        {text: "option 1", correct: false},
-        {text: "truth boi", correct: true},
-        {text: "option 3", correct: false},
-        {text: "option 4", correct: false},
-    ]
-},
-{
-    question: " Question Text?",
-    answers: [
-        {text: "option 1", correct: false},
-        {text: "truth boi", correct: true},
-        {text: "option 3", correct: false},
-        {text: "option 4", correct: false},
-    ]
-}
 ];
 
 // Setting variables for elements
@@ -111,7 +57,7 @@ function startQuiz(){
 
 // Show each new question
 function showQuestion(){
-    
+    resetText();
     var currentQuestion = questions[questionsIndex];
     var questionNum = questionsIndex + 1;
     questionEl.innerHTML = questionNum + ". " + currentQuestion.question;
@@ -122,8 +68,63 @@ function showQuestion(){
         button.innerHTML = answers.text;
         button.classList.add("btn");
         answersEl.appendChild(button);
+        if(answers.correct){
+            button.dataset.correct = answers.correct;
+        }
+        button.addEventListener("click", selectAnswer);
     });
 }
+
+// Remove previous answer/continue buttons
+function resetText(){
+    continueEl.style.display = "none";
+    while(answersEl.firstChild){
+        answersEl.removeChild(answersEl.firstChild);
+    }
+}
+
+// Show correct or incorrect with color
+function selectAnswer(e){
+    var selectedBtn = e.target;
+    var isCorrect = selectedBtn.dataset.correct === "true";
+    if (isCorrect){
+        selectedBtn.classList.add("correct");
+        score++;
+    }
+    else {
+        selectedBtn.classList.add("incorrect");
+    }
+    continueEl.style.display = "block";
+}
+
+function showScore(){
+    resetText();
+    questionEl.innerHTML = `You scored ${score} out of 4!`;
+    continueEl.innerHTML = "Try Again?";
+    continueEl.style.display = "block";
+}
+
+
+function endButton(){
+    questionsIndex++;
+    if(questionsIndex < questions.length){
+        showQuestion();
+    }
+    else {
+        showScore();
+    }
+}
+
+
+continueEl.addEventListener("click", ()=> {
+    if(questionsIndex < questions.length){
+        endButton();
+    }
+    else {
+        startQuiz();
+    }
+})
+
 
 startQuiz();
 
@@ -133,7 +134,6 @@ startQuiz();
 
 // optionsContainer.addEventListener("click", function (){
 //     var selectedOption = e.target;
-//     console.log(selectedOption);
 //     var isCorrect = selectedOption.dataset.answer;
 // }
 
