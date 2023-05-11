@@ -9,6 +9,16 @@ body{
     background: lightblue;
 }
 
+.topbox{
+    background: #fff;
+    text-align: right;
+    width: 90%;
+    max-width: 1000px;
+    margin: 100px auto 0;
+    border-radius: 10px;
+    padding: 30px;
+}
+
 .box{
     background: #fff;
     width: 90%;
@@ -17,12 +27,14 @@ body{
     border-radius: 10px;
     padding: 30px;
 }
+
 .box h1 {
     font-size: 30px;
     color: rgb(73, 50, 205);
     border-bottom: 1px solid #000;
     padding-bottom: 30px;
 }
+
 .quiz{
     padding: 20px 0;
 }

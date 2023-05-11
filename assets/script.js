@@ -1,6 +1,6 @@
 // Questions/Answers 
 var questions = [
-{//question 1
+{// Question 1
     question: "Which is NOT a JS variable type?",
     answers: [
         {text: "Boolean", correct: false},
@@ -9,7 +9,7 @@ var questions = [
         {text: "Number", correct: false},
     ]
 },
-{//question 2
+{// Question 2
     question: "Which method returns the length of the string?",
     answers: [
         {text: "length()", correct: true},
@@ -18,7 +18,7 @@ var questions = [
         {text: "None of the Above", correct: false},
     ]
 },
-{//question 3
+{// Question 3
     question: "What is correct function syntax?",
     answers: [
         {text: "function: myFunction()", correct: false},
@@ -27,7 +27,7 @@ var questions = [
         {text: "myFunction():function", correct: false},
     ]
 },
-{//question 4
+{// Question 4
     question: "How does a for loop start?",
     answers: [
         {text: "for (i=0; i<=5)", correct: false},
@@ -42,6 +42,7 @@ var questions = [
 var questionEl = document.getElementById("question");
 var answersEl = document.getElementById("answers");
 var continueEl = document.getElementById("continue");
+var sec = 30;
 
 // Vars for global starting values
 var questionsIndex = 0;
@@ -62,7 +63,7 @@ function showQuestion(){
     var questionNum = questionsIndex + 1;
     questionEl.innerHTML = questionNum + ". " + currentQuestion.question;
     
-    // Display answers
+    // Display different answers
     currentQuestion.answers.forEach(answers => {
         var button = document.createElement("button");
         button.innerHTML = answers.text;
@@ -93,18 +94,38 @@ function selectAnswer(e){
     }
     else {
         selectedBtn.classList.add("incorrect");
+        sec = sec - 5;
     }
     continueEl.style.display = "block";
 }
 
+// Countdown timer
+function timer(){
+    var timer = setInterval(function(){
+        document.getElementById('timerDisplay').innerHTML='00:'+sec;
+        sec--;
+        if (sec < 0) {
+            clearInterval(timer);
+            showScore();
+        }
+    }, 1000);
+}
+
+function initials(){
+    
+}
+
+// Final text replacement
 function showScore(){
     resetText();
     questionEl.innerHTML = `You scored ${score} out of 4!`;
     continueEl.innerHTML = "Try Again?";
     continueEl.style.display = "block";
+
+    
 }
 
-
+// Determines place in quiz
 function endButton(){
     questionsIndex++;
     if(questionsIndex < questions.length){
@@ -115,75 +136,19 @@ function endButton(){
     }
 }
 
-
+// Retake quiz if desired
 continueEl.addEventListener("click", ()=> {
     if(questionsIndex < questions.length){
         endButton();
     }
     else {
-        startQuiz();
+        location.reload();
     }
 })
 
-
+// Start quiz and timer
 startQuiz();
-
-
-
-// var optionsContainer = document.querySelector("#options-container??")
-
-// optionsContainer.addEventListener("click", function (){
-//     var selectedOption = e.target;
-//     var isCorrect = selectedOption.dataset.answer;
-// }
-
-//     //hover over "SET.ITEM" to see values
-//     if(isCorrect === "true"){
-//         localStorage.setItem("last answer", answer)
-//     else {
-//         alert("Wow, you haven't studied.");
-//     }
-//     }
-// })
+timer();
 
 
 // INS 23/25 to remember how to save highscores
-
-
-// THIS IS AN OBJECT, MUST INCLUDE CURLY BRACES
-// var jsObject = {
-//     name: "javascript" ---- string
-//     age: 10 ----- number
-//     hobbies: ["hobby1", "hobby2"] ---array
-//     x:
-// }
-
-// This is just for incrementing INS-21
-// var counter = document.querySelector("#counter");
-// var addButton = document.querySelector("#add");
-// var subtractButton = document.querySelector("#subtract");
-
-// var count= local/Storage.getItem("count");
-// counter.textContent = count;
-
-// addButton.addEventListener("click", function(){
-//     if (count < 24)
-//         count++;
-//         counter.textContent = count;
-//         localStorage.setItem("count", count);
-// })
-
-// subtractButton.addEventListener("click", function(){
-//     if (count > 0)
-//         count--;
-//         counter.textContent = count;
-//         localStorage.setItem("count", count);
-// })
-
-
-
-// ask about JSON.strigify and JSON.parse(localStoarge.getItem("myjsObject"))
-// parse = string to object
-// stringify = object to string
-// sign up???
-// localStorage.setItem("string", value) <--- how to set localStorage
