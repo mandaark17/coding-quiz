@@ -102,7 +102,7 @@ function selectAnswer(e){
 // Countdown timer
 function timer(){
     var timer = setInterval(function(){
-        document.getElementById('timerDisplay').innerHTML='00:'+sec;
+        document.getElementById("timerDisplay").innerHTML= sec+ " seconds!";
         sec--;
         if (sec < 0) {
             clearInterval(timer);
@@ -111,7 +111,7 @@ function timer(){
     }, 1000);
 }
 
-function initials(){
+function highScores(){
     
 }
 
@@ -121,12 +121,11 @@ function showScore(){
     questionEl.innerHTML = `You scored ${score} out of 4!`;
     continueEl.innerHTML = "Try Again?";
     continueEl.style.display = "block";
-
-    
+    // continueEl.addEventListener("click", startQuiz());
 }
 
 // Determines place in quiz
-function endButton(){
+function nextButton(){
     questionsIndex++;
     if(questionsIndex < questions.length){
         showQuestion();
@@ -139,7 +138,7 @@ function endButton(){
 // Retake quiz if desired
 continueEl.addEventListener("click", ()=> {
     if(questionsIndex < questions.length){
-        endButton();
+        nextButton();
     }
     else {
         location.reload();
