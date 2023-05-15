@@ -64,12 +64,11 @@ body{
     color: white;
 }
 
-#continue {
+#continue { 
     background-color: #000;
-    border-color: ;
     font-size: 18px;
     color: #fff;
-    width: 150px;
+    width: 175px;
     border: 0;
     padding: 10px;
     margin: 10px auto 0;
@@ -77,6 +76,18 @@ body{
     cursor: pointer;
     display: none;
     transition: all 1s;
+}
+
+.score,
+.highScores {
+    background-color: #fff;
+    font-size: 18px;
+    color: #000;
+    width: 175px;
+    border: 0;
+    padding: 10px;
+    margin: 10px auto 0;
+    border-radius: 8px;
 }
 
 #continue:hover {

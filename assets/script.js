@@ -38,15 +38,28 @@ var questions = [
 },
 ];
 
-// Setting variables for elements
+// Global element variables
 var questionEl = document.getElementById("question");
 var answersEl = document.getElementById("answers");
 var continueEl = document.getElementById("continue");
-var sec = 30;
+var scoreAreaEl = document.querySelector('#scoreArea');
+var inNameEl = document.querySelector('#inName');
+var buttonDivEl = document.querySelector('#saveButton');
+var highScoreEl = document.querySelector('#highScores');
+var scorePageEl = document.querySelector('#score');
 
-// Vars for global starting values
+// Global number variables
+var sec = 15;
 var questionsIndex = 0;
 var score = 0;
+
+// Global local storage functions
+var savedScore = function() {
+    localStorage.setItem("score", JSON.stringify(score));
+}
+var savedInit = function(initials) {
+    localStorage.setItem("initials", JSON.stringify(initials));
+}
 
 // Set starting index/score to null, run
 function startQuiz(){
@@ -111,17 +124,46 @@ function timer(){
     }, 1000);
 }
 
-function highScores(){
-    
-}
-
 // Final text replacement
 function showScore(){
     resetText();
     questionEl.innerHTML = `You scored ${score} out of 4!`;
     continueEl.innerHTML = "Try Again?";
     continueEl.style.display = "block";
-    // continueEl.addEventListener("click", startQuiz());
+    initTextEl = document.createElement("input"); 
+    initTextEl.setAttribute("id", "initials-input"); 
+    initTextEl.setAttribute("type", "text"); 
+    initTextEl.setAttribute("name", "initials"); 
+    initTextEl.setAttribute("placeholder", "Enter Initials here"); 
+    inNameEl.appendChild(initTextEl);
+
+    // Create save button element
+    saveButtonEl = document.createElement("button");
+    saveButtonEl.setAttribute("id", "save-btn");
+    saveButtonEl.setAttribute("class","save-btn");
+    saveButtonEl.setAttribute("type", "submit");
+    saveButtonEl.textContent = "Save Score";
+
+    inNameEl.appendChild(saveButtonEl);
+    inNameEl.addEventListener("submit", viewHighScores);
+}
+// Save scores to local storage
+function viewHighScores (e) { 
+    e.preventDefault();
+      var name = document.querySelector("#initials-input").value;
+      savedInit(name);
+      
+      scorePageEl.replaceWith(highScoreEl);
+      loadSaveScores();
+}
+
+// Gets tasks from local storage and load them
+function loadSaveScores() {
+    var savedScore = localStorage.getItem("score");
+    var savedInit = localStorage.getItem("initials");
+    savedScore  = JSON.parse(savedScore);
+    savedInit = JSON.parse(savedInit);
+    document.getElementById("highScores").innerHTML = savedInit + " - " + savedScore;
 }
 
 // Determines place in quiz
